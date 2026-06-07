@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "AI网页总结助手",
+  "version": "1.0.0",
+  "description": "一键总结任意网页内容，支持知乎、公众号、新闻等",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { width: 380px; min-height: 400px; }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <!-- 头部 -->
+  <div class="bg-gradient-to-r from-blue-500 to-purple-600 p-4 text-white">
+    <h1 class="text-lg font-bold">🤖 AI网页总结</h1>
+    <p class="text-xs opacity-80">一键提取核心内容</p>
+  </div>
+
+  <div class="p-4">
+    <!-- API Key输入 -->
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-gray-700 mb-1">
+        DeepSeek API Key
+      </label>
+      <input type="password" id="apiKey" 
+             class="w-full px-3 py-2 border rounded-lg text-sm"
+             placeholder="输入你的API Key">
+      <p class="text-xs text-gray-500 mt-1">
+        <a href="https://platform.deepseek.com" target="_blank" class="text-blue-500">
+          免费获取API Key →
+        </a>
+      </p>
+    </div>
+
+    <!-- 总结长度 -->
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-gray-700 mb-1">总结长度</label>
+      <select id="length" class="w-full px-3 py-2 border rounded-lg text-sm">
+        <option value="short">简短（1-2句话）</option>
+        <option value="medium" selected>适中（3-5句话）</option>
+        <option value="long">详细（段落形式）</option>
+      </select>
+    </div>
+
+    <!-- 总结按钮 -->
+    <button id="summarizeBtn" 
+            class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition">
+      🚀 开始总结
+    </button>
+
+    <!-- 加载状态 -->
+    <div id="loading" class="hidden mt-4 text-center">
+      <div class="animate-spin h-6 w-6 border-b-2 border-blue-500 rounded-full mx-auto"></div>
+      <p class="text-sm text-gray-600 mt-2">AI正在分析...</p>
+    </div>
+
+    <!-- 结果展示 -->
+    <div id="result" class="hidden mt-4">
+      <div class="bg-white border rounded-lg p-3 shadow-sm">
+        <h3 class="text-sm font-semibold text-gray-800 mb-2">📋 总结结果</h3>
+        <p id="summaryText" class="text-sm text-gray-700 leading-relaxed"></p>
+        <button id="copyBtn" class="mt-2 text-xs text-blue-500 hover:text-blue-700">
+          📋 复制内容
+        </button>
+      </div>
+    </div>
+
+    <!-- 错误提示 -->
+    <div id="error" class="hidden mt-4 bg-red-50 border border-red-200 rounded-lg p-3">
+      <p class="text-sm text-red-600" id="errorText"></p>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

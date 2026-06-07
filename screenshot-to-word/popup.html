@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    /* ========== 基础样式 ========== */
+    body { 
+      width: 400px;           /* 弹窗宽度 */
+      min-height: 350px;      /* 最小高度 */
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    
+    /* ========== 头部样式 ========== */
+    .header {
+      background: linear-gradient(135deg, #4CAF50, #2E7D32);  /* 绿色渐变背景 */
+      padding: 16px;
+      color: white;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .header p {
+      margin: 4px 0 0;
+      font-size: 12px;
+      opacity: 0.8;
+    }
+    
+    /* ========== 内容区域 ========== */
+    .content {
+      padding: 16px;
+      background: #f5f5f5;
+    }
+    
+    /* ========== 按钮样式 ========== */
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    /* 绿色按钮 - 主要操作 */
+    .btn-green {
+      background: #4CAF50;
+      color: white;
+    }
+    .btn-green:hover {
+      background: #43A047;
+    }
+    /* 蓝色按钮 - 次要操作 */
+    .btn-blue {
+      background: #2196F3;
+      color: white;
+    }
+    .btn-blue:hover {
+      background: #1976D2;
+    }
+    /* 紫色按钮 - 导出操作 */
+    .btn-purple {
+      background: #7B1FA2;
+      color: white;
+    }
+    .btn-purple:hover {
+      background: #6A1B9A;
+    }
+    /* 禁用状态 */
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    /* ========== 截图预览 ========== */
+    .preview {
+      margin-top: 16px;
+      display: none;          /* 默认隐藏 */
+    }
+    .preview img {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+    .preview-label {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    
+    /* ========== 加载状态 ========== */
+    .loading {
+      margin-top: 16px;
+      display: none;          /* 默认隐藏 */
+      text-align: center;
+    }
+    /* 旋转动画 */
+    .loading .spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #2196F3;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 8px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .loading-text {
+      font-size: 13px;
+      color: #666;
+    }
+    
+    /* ========== 结果展示 ========== */
+    .result {
+      margin-top: 16px;
+      display: none;          /* 默认隐藏 */
+    }
+    .result textarea {
+      width: 100%;
+      height: 120px;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 13px;
+      resize: none;           /* 禁止调整大小 */
+      box-sizing: border-box;
+    }
+    .result-label {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    
+    /* ========== 错误提示 ========== */
+    .error {
+      margin-top: 16px;
+      padding: 12px;
+      background: #ffebee;    /* 浅红色背景 */
+      border: 1px solid #ef5350;
+      border-radius: 8px;
+      display: none;          /* 默认隐藏 */
+    }
+    .error-text {
+      font-size: 13px;
+      color: #c62828;         /* 深红色文字 */
+    }
+    
+    /* ========== 工具类 ========== */
+    .mt-4 {
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 头部标题 -->
+  <div class="header">
+    <h1>📸 截图转文档</h1>
+    <p>选择区域 → 提取文字 → 导出文档</p>
+  </div>
+
+  <!-- 主内容区域 -->
+  <div class="content">
+    <!-- 步骤1: 选择截图区域 -->
+    <button id="selectAreaBtn" class="btn btn-green">
+      🎯 选择截图区域
+    </button>
+
+    <!-- 截图预览区域 -->
+    <div id="screenshotPreview" class="preview">
+      <div class="preview-label">截图预览</div>
+      <img id="screenshotImg" alt="截图预览">
+    </div>
+
+    <!-- 步骤2: 提取文字 -->
+    <button id="extractBtn" class="btn btn-blue mt-4" style="display: none;">
+      📝 提取文字
+    </button>
+
+    <!-- 加载状态 -->
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+      <div class="loading-text">处理中...</div>
+    </div>
+
+    <!-- 提取结果展示 -->
+    <div id="result" class="result">
+      <div class="result-label">提取结果</div>
+      <textarea id="resultText" placeholder="提取的文字将显示在这里..."></textarea>
+    </div>
+
+    <!-- 步骤3: 导出文档 -->
+    <button id="exportBtn" class="btn btn-purple mt-4" style="display: none;">
+      📄 导出文档
+    </button>
+
+    <!-- 错误提示 -->
+    <div id="error" class="error">
+      <div class="error-text" id="errorText"></div>
+    </div>
+  </div>
+
+  <!-- 引入弹窗脚本 -->
+  <script src="popup.js"></script>
+</body>
+</html>
