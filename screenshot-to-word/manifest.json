@@ -1,14 +1,17 @@
 {
   "manifest_version": 3,
   "name": "网页截图转文档",
-  "version": "1.0.0",
-  "description": "选择区域截图，提取文字，导出文档",
+  "version": "2.0.0",
+  "description": "选择区域截图，提取文字/OCR识别，导出多种格式文档",
   "permissions": [
     "activeTab",
     "storage",
     "scripting"
   ],
-  "host_permissions": ["<all_urls>"],
+  "host_permissions": [
+    "<all_urls>",
+    "https://aip.baidubce.com/*"
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
