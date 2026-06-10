@@ -1,7 +1,7 @@
-{
+﻿{
   "manifest_version": 3,
   "name": "网页截图转文档",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "选择区域截图，提取文字/OCR识别，导出多种格式文档",
   "permissions": [
     "activeTab",
@@ -21,6 +21,20 @@
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
       "128": "icons/icon128.png"
+    }
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+P"
+      },
+      "description": "打开截图转文档"
+    },
+    "start-selection": {
+      "suggested_key": {
+        "default": "Alt+S"
+      },
+      "description": "直接开始框选截图区域"
     }
   },
   "background": {

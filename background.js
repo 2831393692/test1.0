@@ -4,6 +4,22 @@
 let pendingCallback = null;
 
 // ========== 消息监听 ==========
+// ========== 快捷键监听 ==========
+chrome.commands.onCommand.addListener(async (command) => {
+  if (command === 'start-selection') {
+    try {
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      await chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        files: ['content.js']
+      });
+    } catch (e) {
+      console.error('快捷键注入失败:', e);
+    }
+  }
+});
+
+// ========== 消息监听 ==========
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   
   if (request.type === 'captureVisibleTab') {
