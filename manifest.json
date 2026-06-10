@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "网页截图转文档",
+  "version": "2.2.2",
+  "description": "选择区域截图，提取文字/OCR识别，导出多种格式文档",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "https://aip.baidubce.com/*",
+    "https://ocr.tencentcloudapi.com/*",
+    "https://*.aliyuncs.com/*",
+    "http://*.aliyuncs.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
